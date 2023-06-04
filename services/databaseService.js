@@ -11,6 +11,11 @@ const databaseService = () => {
   });
 
   const table = "peliculas";
+
+  const leerPelicula = ()=>{
+    return knex(table).select();
+  }
+
   const crearPelicula = ({nombre, genero, anio}) => {
     return knex(table).insert({
       nombre: nombre,
@@ -18,10 +23,29 @@ const databaseService = () => {
       anio: anio,
     });
   };
+
+  const modificarPelicula = (id_pelicula, { nombre, genero, anio }) => {
+    return knex(table).where("id_pelicula", id_pelicula).update({
+      nombre: nombre,
+      genero: genero,
+      anio: anio,
+    });
+  };
+
+  const eliminarPelicula = (id_pelicula) => {
+    return knex(table).where("id_pelicula", id_pelicula).del();
+  };
+
   return {
-    crearPelicula
-  }
+    crearPelicula,
+    leerPelicula,
+    modificarPelicula,
+    eliminarPelicula,
+  };
 };
+
+
+  
 module.exports ={
     databaseService
 }
